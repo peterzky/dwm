@@ -26,7 +26,7 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "1:ORG", "2:WEB", "3:DOC", "4:MSG", "5:ETC", "6:WSA", "7:WSB", "8:WSC", "9:WSD" };
+static const char *tags[] = { "1:WEB", "2:MSG", "3:DOC", "4:ORG", "5:ETC", "6:WSA", "7:WSB", "8:WSC", "9:WSD" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -66,12 +66,14 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *ws_menu[] = { "ws_menu", NULL };
+static const char *ws_menu[] = { "ws_menu", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char *emacscmd[] = { "emacsclient", "-nc", NULL };
 static const char *volume_up[] = { "/home/peterzky/.bin/volume.sh", "up", NULL };
 static const char *volume_down[] = { "/home/peterzky/.bin/volume.sh", "down", NULL };
 static const char *volume_mute[] = { "/home/peterzky/.bin/volume.sh", "mute", NULL };
+static const char *player_next[] = { "playerctl", "next", NULL };
+static const char *player_prev[] = { "playerctl", "previous", NULL };
 static const char *autorandr[] = { "autorandr", "-c", NULL };
 
 static Key keys[] = {
@@ -80,12 +82,15 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_x,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_e,      spawn,          {.v = emacscmd } },
-	// Volume Control
+	/* Volume Control */
 	{ 0,            XF86XK_AudioLowerVolume,   spawn,          {.v = volume_down } },
 	{ 0,            XF86XK_AudioMute,          spawn,          {.v = volume_mute } },
 	{ 0,            XF86XK_AudioRaiseVolume,   spawn,          {.v = volume_up   } },
-	// Autorandr
+	/* Autorandr */
 	{ MODKEY,                       XK_backslash, spawn,       {.v = autorandr   } },
+	/* playerctl */
+	{ MODKEY,                       XK_minus,  spawn,          {.v = player_prev } },
+       	{ MODKEY,                       XK_equal,  spawn,          {.v = player_next } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },

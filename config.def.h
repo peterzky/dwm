@@ -71,6 +71,7 @@ static const char *emacscmd[] = { "emacsclient", "-nc", NULL };
 static const char *volume_up[] = { "/home/peterzky/.bin/volume.sh", "up", NULL };
 static const char *volume_down[] = { "/home/peterzky/.bin/volume.sh", "down", NULL };
 static const char *volume_mute[] = { "/home/peterzky/.bin/volume.sh", "mute", NULL };
+static const char *autorandr[] = { "autorandr", "-c", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -81,6 +82,8 @@ static Key keys[] = {
 	{ 0,            XF86XK_AudioLowerVolume,   spawn,          {.v = volume_down } },
 	{ 0,            XF86XK_AudioMute,          spawn,          {.v = volume_mute } },
 	{ 0,            XF86XK_AudioRaiseVolume,   spawn,          {.v = volume_up   } },
+	// Autorandr
+	{ MODKEY,                       XK_backslash, spawn,       {.v = autorandr   } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },

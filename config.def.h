@@ -37,6 +37,7 @@ static const Rule rules[] = {
 	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
 	{ "Firefox",  NULL,       NULL,       1,            0,           -1 },
 	{ "Wine",     NULL,       NULL,       1 << 4,       1,           -1 },
+	{ "st-256color", NULL,    "transient", 0,           1,           -1 },
 };
 
 /* layout(s) */
@@ -65,8 +66,8 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *ws_menu[] = { "ws_menu", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-i", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
+static const char *ws_menu[] = { "ws_menu", "-i", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char *emacscmd[] = { "emacsclient", "-nc", NULL };
 static const char *volume_up[] = { "/home/peterzky/.bin/volume.sh", "up", NULL };
@@ -75,6 +76,8 @@ static const char *volume_mute[] = { "/home/peterzky/.bin/volume.sh", "mute", NU
 static const char *player_next[] = { "playerctl", "next", NULL };
 static const char *player_prev[] = { "playerctl", "previous", NULL };
 static const char *autorandr[] = { "autorandr", "-c", NULL };
+static const char *passmenu[] = { "rofi-pass", NULL };
+static const char *org_caputre[] = { "org-capture", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -82,20 +85,23 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_x,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_e,      spawn,          {.v = emacscmd } },
+	/* Org Capture */
+	{ MODKEY,                       XK_c,      spawn,          {.v = org_caputre } },
 	/* Volume Control */
 	{ 0,            XF86XK_AudioLowerVolume,   spawn,          {.v = volume_down } },
 	{ 0,            XF86XK_AudioMute,          spawn,          {.v = volume_mute } },
 	{ 0,            XF86XK_AudioRaiseVolume,   spawn,          {.v = volume_up   } },
 	/* Autorandr */
 	{ MODKEY,                       XK_backslash, spawn,       {.v = autorandr   } },
+	{ MODKEY,                       XK_i,      spawn,          {.v = passmenu } },
 	/* playerctl */
 	{ MODKEY,                       XK_minus,  spawn,          {.v = player_prev } },
        	{ MODKEY,                       XK_equal,  spawn,          {.v = player_next } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
-	{ MODKEY,                       XK_i,      incnmaster,     {.i = +1 } },
-	{ MODKEY,                       XK_d,      incnmaster,     {.i = -1 } },
+	{ MODKEY,                       XK_comma,  incnmaster,     {.i = +1 } },
+	{ MODKEY,                       XK_period, incnmaster,     {.i = -1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,      setmfact,       {.f = +0.05} },
 	{ MODKEY,                       XK_Return, zoom,           {0} },
@@ -108,10 +114,10 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_0,      view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,      tag,            {.ui = ~0 } },
-	{ MODKEY,                       XK_comma,  focusmon,       {.i = -1 } },
-	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
+	{ MODKEY,                       XK_a,      focusmon,       {.i = -1 } },
+	{ MODKEY,                       XK_s,      focusmon,       {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_a,      tagmon,         {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_s,      tagmon,         {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_j,      pushdown,       {0} },
 	{ MODKEY|ShiftMask,             XK_k,      pushup,         {0} },
 	TAGKEYS(                        XK_1,                      0)

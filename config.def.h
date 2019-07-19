@@ -73,6 +73,7 @@ static const char *emacscmd[] = { "emacsclient", "-nc", NULL };
 static const char *volume_up[] = { "volume-ctl", "up", NULL };
 static const char *volume_down[] = { "volume-ctl", "down", NULL };
 static const char *volume_mute[] = { "volume-ctl", "mute", NULL };
+static const char *audio_switch[] = { "audio-switch-menu", NULL };
 static const char *player_next[] = { "playerctl", "next", NULL };
 static const char *player_prev[] = { "playerctl", "previous", NULL };
 static const char *autorandr[] = { "autorandr", "-c", NULL };
@@ -91,6 +92,7 @@ static Key keys[] = {
 	{ 0,            XF86XK_AudioLowerVolume,   spawn,          {.v = volume_down } },
 	{ 0,            XF86XK_AudioMute,          spawn,          {.v = volume_mute } },
 	{ 0,            XF86XK_AudioRaiseVolume,   spawn,          {.v = volume_up   } },
+	{ MODKEY,                       XK_v,      spawn,          {.v = audio_switch} },
 	/* Autorandr */
 	{ MODKEY,                       XK_backslash, spawn,       {.v = autorandr   } },
 	{ MODKEY,                       XK_i,      spawn,          {.v = passmenu } },
